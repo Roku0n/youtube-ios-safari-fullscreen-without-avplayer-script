@@ -1,4 +1,4 @@
-# YouTube iOS 铺满(Userscript)
+# YouTube iPhone iOS Safari 伪全屏/铺满(Userscript)
 
 一个给 iOS Safari 用的 Userscript:点击 YouTube 移动网页版(`m.youtube.com`)视频的全屏按钮时,让播放器铺满整个屏幕,但**不触发 iOS 系统原生的全屏播放器**——播放器控件(播放/暂停、进度条、时间、设置等)仍然是网页 DOM 里的普通元素,继续参与页面渲染。
 
