@@ -22,15 +22,13 @@ iOS Safari 上,`<video>` 元素触发系统原生全屏后,画面会交给系统
 
 ## 已知限制
 
+- **仅支持 iPhone 上的 iOS Safari**。没有在 iPad 上测试过——iPadOS 上 `Element.requestFullscreen()`(任意元素全屏)是受支持的,跟 iPhone 的情况不一样,这个脚本的绕过逻辑很可能不适用,也没有必要。也没有在其他 iOS 浏览器(Chrome for iOS 等,底层仍是 WebKit)上测试过。
 - **点赞/点踩/收藏按钮、"下一个视频"推荐卡片**(安卓版全屏时左右下角常驻的那两组 UI)目前做不出来。这两块 UI(YouTube 内部称为 `fullscreenEngagementOverlayRenderer` / `playerOverlayAutoplayRenderer`)只在浏览器**真正**进入 `document.fullscreenElement` 状态时才会被 YouTube 自己的播放器 JS 动态创建,退出全屏就会被销毁。而这个脚本为了避免系统原生播放器接管画面,一开始就拦截了真实的 `requestFullscreen()` 调用,导致 YouTube 自己的全屏处理逻辑(包括这两个浮层的创建)根本没有执行的机会。伪造 `fullscreenElement` 相关属性并派发 `fullscreenchange` 事件也无法在事后补触发这段创建逻辑。
 - 仅在 `m.youtube.com`(移动网页版)上测试过;YouTube 前端会不定期改版,选择器/class 名可能随时间失效,需要重新适配。
-- 仅在 iOS Safari + Userscripts 组合下测试过。
 
-## 版本历史
+## 版本
 
-- v6:核心铺满逻辑——拦截全屏请求,用内联样式(`!important`)把播放器容器、中间层、`<video>` 逐层撑满视口,移除 `controls` 属性。
-- v6.1:进度条加了一条 `transform`,让它避开 Home 指示条手势区,但导致进度条和底部控制条(时间显示、全屏恢复按钮)重叠、触摸事件被挡住,拖不动进度条。
-- v6.2:修复 v6.1 的问题——发现问题根因是 transform 只加在了进度条自己身上,没加在底部控制条上;同时踩过一个坑:transform 不能加在底部控制条的父级(一个 0 高度的纯锚点容器)上,因为该容器的子元素是 `position:fixed`,一旦祖先带 `transform` 就会变成它们的新定位基准,导致整栏跑到屏幕外。最终把同样的位移直接加到两个真正 `fixed` 定位的子元素(`.player-controls-bottom`)上,问题解决。
+当前版本 1.0,是第一个对外发布的版本。
 
 ## License
 

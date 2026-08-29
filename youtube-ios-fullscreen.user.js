@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         YouTube iOS 铺满
 // @namespace    local.rokuon
-// @version      6.2
-// @description  v6 铺满逻辑不变。v6.1 加的进度条上移(避开 Home 指示条手势区)会导致进度条和底部控制条(时间显示/全屏恢复按钮)重叠、吃掉触摸事件,拖不动进度条——real Web Inspector 实测确认根因是 transform 只加在了进度条自己身上,没加在底部控制条上。v6.2 把同样的位移一起加到 .player-controls-bottom(左右两栏共用的 class),两者保持原有相对位置一起上移,不再重叠,拖动恢复正常。
+// @version      1.0
+// @description  仅适用于 iPhone iOS Safari:点击 YouTube 全屏按钮时让播放器铺满屏幕,不触发系统原生全屏播放器,控件保留在网页 DOM 里。
 // @match        https://m.youtube.com/*
 // @run-at       document-start
 // @grant        none
